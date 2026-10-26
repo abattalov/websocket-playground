@@ -42,6 +42,8 @@ sendButton.addEventListener("click", function sendMessage(){
     return;
   }
 
-  ws.send(messageInput.value);
-  messageInput.value = "";
+  ws.send(JSON.stringify({
+    type: "chat",
+    text: messageInput.value
+  }))
 })
