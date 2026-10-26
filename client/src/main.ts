@@ -5,6 +5,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <p>Open DevTools to see connection events.</p>
   <input id="message" type="text" placeholder="Enter a message" />
   <button id="send">Send</button>
+  <ul id="messages"></ul>
 `;
 
 const ws = new WebSocket("ws://localhost:8080");
@@ -14,7 +15,12 @@ ws.onopen = function connected(){
 }
 
 ws.onmessage = function message(event){
-  console.log("Recieved:", event.data);
+  const messages = document.querySelector<HTMLUListElement>('#messages')!;
+
+  const item = document.createElement("li");
+  item.textContent = event.data;
+
+  messages.appendChild(item);
 }
 
 ws.onclose = function disconnected(event) {
